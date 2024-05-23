@@ -18,3 +18,7 @@
 
 >> Errors being returned from firebase api e.g [signin], can be presented more friendly to end users.
 
+![Simulator Screenshot - iPhone 13 - 2024-05-23 at 07 02 49](https://github.com/DauduVictor/arm_t/assets/83707761/3f929f6d-419b-4d4e-a37c-b070e1bfdf80)
+![Simulator Screenshot - iPhone 13 - 2024-05-23 at 08 04 20](https://github.com/DauduVictor/arm_t/assets/83707761/1950e4a0-fc71-4c1c-8ad2-56779a194ec7)
+![Simulator Screenshot - iPhone 13 - 2024-05-23 at 08 04 11](https://github.com/DauduVictor/arm_t/assets/83707761/8aec92fa-0c22-4a1f-a2bd-6eb1ee970e1e)
+![Simulator Screenshot - iPhone 13 - 2024-05-23 at 08 04 05](https://github.com/DauduVictor/arm_t/assets/83707761/aea14cd6-b511-4703-a8eb-483b3892abfa)
