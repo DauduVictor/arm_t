@@ -45,7 +45,7 @@ class Button extends StatelessWidget {
       ),
       onPressed: () {
         Functions.trackButtonClickedEvent(buttonEvent: button_event);
-        onPressed;
+        onPressed();
       },
       child: IntrinsicWidth(
         child: SizedBox(
