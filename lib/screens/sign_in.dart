@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:arm_test/extensions.dart';
 import 'package:arm_test/features/features.dart';
+import 'package:arm_test/push_notification_manager.dart';
 import 'package:arm_test/screens/screens.dart';
 import 'package:arm_test/theme/theme.dart';
 import 'package:flutter/gestures.dart';
@@ -27,14 +30,18 @@ class SignIn extends HookWidget {
             context,
             error.toString(),
           ),
-          signIn: (user) => Navigator.pushAndRemoveUntil(
+          signIn: (user) {
+            unawaited(PushNotificationsManager().init());
+            return Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => HomePage(
                   user: user,
                 ),
               ),
-              (route) => false),
+              (route) => false,
+            );
+          },
         );
       },
       builder: (context, state) {
