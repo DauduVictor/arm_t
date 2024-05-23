@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:arm_test/constant.dart';
+import 'package:arm_test/core/db_provider.dart';
 import 'package:arm_test/features/features.dart';
 import 'package:arm_test/screens/screens.dart';
 import 'package:arm_test/theme/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +15,10 @@ class HomePage extends HookWidget {
   static const String id = 'homePage';
   const HomePage({
     super.key,
-    this.user,
+    this.email,
   });
 
-  final User? user;
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,13 @@ class HomePage extends HookWidget {
             context,
             error.toString(),
           ),
-          logout: (val) => Navigator.pushNamedAndRemoveUntil(
-              context, SplashScreen.id, (route) => false),
+          logout: (val) async {
+            await DBProvider()
+                .storeBoolInSharedPreference(isUserLoggedIn, false);
+            if (!context.mounted) return;
+            Navigator.pushNamedAndRemoveUntil(
+                context, SplashScreen.id, (route) => false);
+          },
         );
       },
       builder: (context, state) {
@@ -58,7 +64,7 @@ class HomePage extends HookWidget {
                       fit: BoxFit.scaleDown,
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Welcome ${user?.email ?? ''}',
+                        'Welcome ${email ?? ''}',
                         textScaler: const TextScaler.linear(1),
                         style: textTheme.bodyLarge!.copyWith(
                           color: AppColors.black,
@@ -103,6 +109,7 @@ class HomePage extends HookWidget {
                     Button(
                       label: 'Log Out',
                       width: mqr.width,
+                      button_event: 'log_out',
                       onPressed: () {
                         context.read<AuthCubit>().logout();
                       },

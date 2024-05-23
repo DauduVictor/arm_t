@@ -100,6 +100,7 @@ class SignUp extends HookWidget {
                           Button(
                             label: 'Continue',
                             width: mqr.width,
+                            button_event: 'sign_up',
                             onPressed: () {
                               if (formKey.value.currentState!.validate()) {
                                 context.read<AuthCubit>().signUp(

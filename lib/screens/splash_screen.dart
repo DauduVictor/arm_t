@@ -1,3 +1,5 @@
+import 'package:arm_test/constant.dart';
+import 'package:arm_test/core/db_provider.dart';
 import 'package:arm_test/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,8 +14,26 @@ class SplashScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     /// Function to navigate to the next screen after the splash screen is completed
-    void navigate() {
-      Navigator.pushNamed(context, SignIn.id);
+    void navigate() async {
+      final isLoggedIn =
+          await DBProvider().getBoolInSharedPreference(isUserLoggedIn);
+
+      if (isLoggedIn) {
+        final email = await DBProvider().getInSharedPreference(userEmail);
+        if (!context.mounted) return;
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(
+              email: email,
+            ),
+          ),
+          (route) => false,
+        );
+      } else {
+        if (!context.mounted) return;
+        Navigator.pushNamed(context, SignIn.id);
+      }
     }
 
     return Scaffold(

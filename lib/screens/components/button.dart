@@ -1,3 +1,4 @@
+import 'package:arm_test/functions.dart';
 import 'package:arm_test/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,7 @@ class Button extends StatelessWidget {
   final String label;
   final void Function() onPressed;
   final Color labelColor;
+  final String button_event;
   final Color? color;
   final Widget? child;
   final double verticalPadding;
@@ -16,6 +18,7 @@ class Button extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
+    required this.button_event,
     this.labelColor = AppColors.white,
     this.child,
     this.color,
@@ -40,7 +43,10 @@ class Button extends StatelessWidget {
         ),
         side: enabled ? null : const BorderSide(color: AppColors.brown4E),
       ),
-      onPressed: onPressed,
+      onPressed: () {
+        Functions.trackButtonClickedEvent(buttonEvent: button_event);
+        onPressed;
+      },
       child: IntrinsicWidth(
         child: SizedBox(
           width: width,

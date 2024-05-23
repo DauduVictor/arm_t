@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:arm_test/constant.dart';
+import 'package:arm_test/core/db_provider.dart';
 import 'package:arm_test/extensions.dart';
 import 'package:arm_test/features/features.dart';
 import 'package:arm_test/push_notification_manager.dart';
@@ -32,11 +34,20 @@ class SignIn extends HookWidget {
           ),
           signIn: (user) {
             unawaited(PushNotificationsManager().init());
-            return Navigator.pushAndRemoveUntil(
+            try {
+              DBProvider().storeBoolInSharedPreference(isUserLoggedIn, true);
+              DBProvider().storeInSharedPreference(userEmail, user?.email ?? '');
+            } catch (e) {
+              ShowMessage.showSnackBar(
+                context,
+                e.toString(),
+              );
+            }
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => HomePage(
-                  user: user,
+                  email: user?.email ?? '',
                 ),
               ),
               (route) => false,
@@ -94,6 +105,7 @@ class SignIn extends HookWidget {
                           Button(
                             label: 'Continue',
                             width: mqr.width,
+                            button_event: 'sign_in',
                             onPressed: () {
                               if (formKey.value.currentState!.validate()) {
                                 context.read<AuthCubit>().signIn(
